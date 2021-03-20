@@ -37,7 +37,7 @@ public class MySQL {
         String host = mysqlPref.get("HOST", "127.0.0.1");
         String user = mysqlPref.get("USER", "root");
         String password = mysqlPref.get("PASS", "");
-        String database = mysqlPref.get("BASE", "jBot");
+        String database = mysqlPref.get("BASE", "DevUP");
         String port = mysqlPref.get("PORT", "3306");
         Boolean ssl = mysqlPref.getBoolean("SSL", true);
 

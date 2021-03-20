@@ -26,7 +26,7 @@ public class InfoCmd implements Command {
 
         EmbedBuilder embed = new EmbedBuilder();
         embed.setTitle("Info");
-        embed.setAuthor("jBot");
+        embed.setAuthor("DevUp Community Bot");
         embed.setColor(Color.CYAN);
         embed.addField("Running Version:", version, false);
         embed.addField("Sourcecode:", github, false);
