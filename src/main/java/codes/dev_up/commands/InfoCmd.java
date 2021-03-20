@@ -48,7 +48,7 @@ public class InfoCmd implements Command {
 
     @Override
     public Permission[] requirePermission() {
-        return null;
+        return new Permission[]{Permission.MESSAGE_MANAGE};
     }
 
 }
