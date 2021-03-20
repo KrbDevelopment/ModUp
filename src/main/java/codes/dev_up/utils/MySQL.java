@@ -227,6 +227,7 @@ class SQL {
             return array;
         arguments = arguments.substring(0, arguments.length() - 5);
         try {
+            System.out.println("SELECT * FROM " + table + " WHERE " + arguments + ";");
             ResultSet rs = MySQL.query("SELECT * FROM " + table + " WHERE " + arguments + ";");
             while (rs.next())
                 array.add(rs.getObject(selected));
