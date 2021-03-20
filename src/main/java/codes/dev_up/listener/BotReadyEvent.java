@@ -9,6 +9,6 @@ public class BotReadyEvent extends ListenerAdapter {
 
     @Override
     public void onReady(@NotNull ReadyEvent event) {
-        HandlerManager.initDatabases();
+        
     }
 }

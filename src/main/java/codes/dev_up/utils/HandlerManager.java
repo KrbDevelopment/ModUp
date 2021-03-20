@@ -39,22 +39,4 @@ public class HandlerManager {
         CommandListener.commands.put("binfo", new codes.dev_up.commands.backup.InfoCmd());
         CommandListener.commands.put("bload", new LoadCmd());
     }
-
-    public static void initDatabases() {
-        DevUpBot.jda.getGuilds().forEach(guild -> {
-            String[] guilds_where_args = {String.format("guild_id = %s", guild.getId())};
-            String[] guilds_select_args = {"guild_id", "owner_id", "join_message", "leave_message"};
-            List<HashMap<String, Object>> guilds = SQL.listGet(guilds_select_args, guilds_where_args, "guilds");
-
-            if (guilds.size() <= 0) return;
-
-            Set<String> guildKey = guilds.get(0).keySet();
-            HashMap<String, Object> content = new HashMap<>();
-            guildKey.forEach(key -> {
-                content.put(key, guilds.get(0).get(key));
-            });
-
-            System.out.println(content);
-        });
-    }
 }
