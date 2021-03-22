@@ -7,7 +7,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import java.io.IOException;
 import java.text.ParseException;
 
-public class SetJoinMessageCmd implements Command {
+public class CreatePollCmd implements Command {
 
     @Override
     public boolean preaction(String[] args, MessageReceivedEvent event) {
@@ -31,7 +31,7 @@ public class SetJoinMessageCmd implements Command {
 
     @Override
     public Permission[] requirePermission() {
-        return new Permission[0];
+        return new Permission[]{};
     }
 
 }

@@ -41,7 +41,7 @@ public class DevUpBot {
 
             MySQL.connect();
 
-            HandlerManager.initListeners();
+            HandlerManager.initPreListeners();
             HandlerManager.initCommands();
 
             jda = builder.build();
