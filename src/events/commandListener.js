@@ -12,6 +12,7 @@ common.data['discord'].client.on('message', (message) => {
 
     const cmd = common.data['discord'].commands[command];
     if (!cmd) return;
+    if (!message.member.hasPermission(cmd.permissions)) return;
 
     cmd.run(message, args);
 });
