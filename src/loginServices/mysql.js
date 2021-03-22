@@ -19,22 +19,23 @@ const con = mysql.createConnection({
  * @returns {Promise<unknown>}
  */
 function addRow(table, cols, data) {
+    console.log(data)
     return new Promise(function (resolve, reject) {
         const colSeparated = cols.join(', ');
         let emptyPlaceholders = "";
-        for (let i = 0; i < cols.length; i++) {
+        for (let i = 0; i < (cols.length - 1); i++) {
             emptyPlaceholders += "?, "
         }
+        emptyPlaceholders += '?'
         let insertQuery = `INSERT INTO ${table} (${colSeparated}) VALUES (${emptyPlaceholders})`;
         let query = mysql.format(insertQuery, data);
+        console.log(query)
         con.query(query, (err, res) =>  {
            if (err) {
                reject(err);
-               return 0;
            }
 
-            console.log("Empty Insert")
-            return res.insertId;
+            resolve(res.insertId);
         });
     });
 }
@@ -83,6 +84,12 @@ async function querySelected(table, select, condition) {
     });
 }
 
+/**
+ * Delete rows by condition
+ * @param table
+ * @param condition
+ * @returns {Promise<unknown>}
+ */
 async function deleteRows(table, condition) {
     return new Promise(function (resolve, reject) {
         let whereCondition = condition.join((' AND '));
@@ -96,4 +103,12 @@ async function deleteRows(table, condition) {
             resolve(res.affectedRows);
         });
     });
+}
+
+///////
+module.exports = {
+    addRow,
+    querySelected,
+    queryAll,
+    deleteRows
 }
