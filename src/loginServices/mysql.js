@@ -5,10 +5,10 @@ const mysql = require('mysql')
 console.log("=> Connecting to mysql...");
 const con = mysql.createConnection({
     connectionLimit: 100,
-    host: 'dev-up.codes',
-    user: 'JanKrb',
-    password: 'DkFwe3mmXCxdJV6P',
-    database: 'devup_bot'
+    host: common.data['config'].MYSQL_HOST,
+    user: common.data['config'].MYSQL_USER,
+    password: common.data['config'].MYSQL_PASS,
+    database: common.data['config'].MYSQL_DB
 });
 
 /**

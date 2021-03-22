@@ -1,6 +1,11 @@
 {
     "BOT_TOKEN": "",
     "BOT_PREFIX": "",
-    
+
+    "MYSQL_HOST": "",
+    "MYSQL_USER": "",
+    "MYSQL_PASS": "",
+    "MYSQL_DB": "",
+
     "WEB_PORT": 0
 }
