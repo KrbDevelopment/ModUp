@@ -105,10 +105,45 @@ async function deleteRows(table, condition) {
     });
 }
 
+/**
+ * Query a custom MySQL statement
+ * @param statement
+ * @returns {Promise<unknown>}
+ */
+async function queryStatement(statement) {
+    return new Promise(function (resolve, reject) {
+        con.query(statement, (err, res) => {
+            if (err) {
+                reject(err);
+            }
+
+            resolve(res);
+        });
+    });
+}
+
+async function updateRows(table, condition, update) {
+    return new Promise(function (resolve, reject) {
+        let updateCondition = update.join((', '));
+        let whereCondition = condition.join((' AND '));
+        let selectQuery = `UPDATE ${table} SET ${updateCondition} WHERE ${whereCondition}`;
+
+        con.query(selectQuery, (err, res) => {
+            if (err) {
+                reject(err);
+            }
+
+            resolve(res.affectedRows);
+        });
+    });
+}
+
 ///////
 module.exports = {
     addRow,
     querySelected,
     queryAll,
-    deleteRows
+    deleteRows,
+    updateRows,
+    queryStatement
 }
