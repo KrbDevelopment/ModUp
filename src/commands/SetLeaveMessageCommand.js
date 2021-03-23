@@ -2,14 +2,15 @@ const common = require("../../common");
 const mentionF = require("../utils/mentionFunctions")
 const messageF = require("../utils/messageFunctions");
 const mysql = require("../loginServices/mysql");
+const {getSuccessMessage, getErrorMessage} = require("../utils/messageFunctions");
+const {getEmbedFromCode} = require("../utils/embedInterpreter");
 
 console.log("=> Initing discord command: SetLeaveMessage")
 
 const name = "setleavemessage"
 
-function run(message, args) {
+async function run(message, args) {
     if (args.length <= 0) {
-        const messages = mysql.queryAll('guild_messages', ['guildId = ' + message.guild.id, 'channelId = ' + message.channel.id, 'type = \'leave\''])
         const embed = new common.data['discord'].discord.MessageEmbed();
 
         embed.setColor('#ff0000')
@@ -17,24 +18,23 @@ function run(message, args) {
         embed.setFooter("For delete: " + common.data['config'].BOT_PREFIX + "setleavemessage delete [number]")
         embed.setTimestamp(Date.now())
 
-        messages.then((res) => {
-            let description = ""
+        const positions = await mysql.queryStatement(`SELECT * FROM guild_messages WHERE guildId = ${message.guild.id} AND type = 'leave';`);
 
-            for (let i = 0; i < res.length; i++) {
-                description += `${i+1}.) ${res[i].message}\n`;
-            }
-
-            embed.setDescription(description)
-            message.channel.send(embed)
-        });
-    } else if (args[0] === 'delete') {
-        const targetChannel = mentionF.getTextChannelFromMention(args[1]);
-        if (!targetChannel) {
-            message.channel.send(messageF.getErrorMessage('Please mention a channel as your first parameter.'));
-            return;
+        for await (const position of positions) {
+            let embedO = await getEmbedFromCode(position.message);
+            await embed.addField(`#${position.gmId}`, embedO.title + ` (<#${position.channelId}>)`, false);
         }
 
-        // TODO: Delete
+        await message.channel.send(embed)
+    } else if (args[0] === 'delete') {
+        if (args[1] === undefined || args[1] === null) {
+            message.channel.send(getErrorMessage("Please enter a position as your first parameter"));
+            return;
+        }
+        const positionInt = parseInt(args[1]);
+
+        mysql.queryVoid("DELETE FROM guild_messages WHERE gmId = " + positionInt);
+        message.channel.send(getSuccessMessage("Deleted Leave Message", "You successfully deleted the leave message " + positionInt));
     } else {
         const targetChannel = mentionF.getTextChannelFromMention(args[0]);
         if (!targetChannel) {
@@ -42,11 +42,14 @@ function run(message, args) {
             return;
         }
 
-        args = args.slice(1)
-        const leaveMessage = args.join(' ')
-        mysql.addRow('guild_messages', ['guildId', 'creatorId', 'channelId', 'type', 'message'], [message.guild.id, message.author.id, message.channel.id, 'leave', leaveMessage])
+        if (args[1] == null) {
+            message.channel.send(messageF.getErrorMessage('Please use a embed code as your second parameter.'));
+            return;
+        }
+
+        mysql.addRow('guild_messages', ['guildId', 'creatorId', 'channelId', 'type', 'message'], [message.guild.id, message.author.id, message.channel.id, 'leave', args[1]])
             .then((res) => {
-                message.channel.send(messageF.getSuccessMessage('Successfully changed leave message', `You successfully changed the leave message into: ${leaveMessage}`));
+                message.channel.send(messageF.getSuccessMessage('Successfully changed leave message', `You successfully changed the leave message`));
             })
             .catch((err) => {
                 message.channel.send(messageF.getErrorMessage('We were unable to set your message. Please report this issue to a ModUp developer.'));
