@@ -1,14 +1,12 @@
 const common = require("../../common");
 const mysql = require("../loginServices/mysql");
 
-async function getMemberLevel(guild, userid) {
-
-
-    const userdata = mysql.querySelected("member", ["level"], ['guild = ' + guild, 'uuid = ' + userid])
-    userdata.then((res) => {
-        return res[0].level;
+function getMemberLevel(guild, userid) {
+    return new Promise(function (resolve, reject) {
+        mysql.querySelected("member", ["level"], ['guild = ' + guild, 'uuid = ' + userid]).then((res) => {
+            resolve(res[0].level);
+        });
     });
-
 }
 
 

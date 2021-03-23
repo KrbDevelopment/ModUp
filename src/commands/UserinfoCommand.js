@@ -4,7 +4,7 @@ console.log("=> Initing discord command: Userinfo")
 
 const name = "userinfo"
 
-function run(message, args) { //message = event | args = args
+async function run(message, args) { //message = event | args = args
     const discord = common.data['discord'].discord
 
     if (args.length === 0) {
@@ -24,10 +24,7 @@ function run(message, args) { //message = event | args = args
             var status = "Server Booster"
         }
 
-        ranking.getMemberLevel(message.guild.id, author.user.id).then((level)=>{
-            console.log(level)
-        })
-
+        const level = await ranking.getMemberLevel(message.guild.id, author.user.id);
 
         const UserinfoEmbed = new discord.MessageEmbed()
             .setColor('#825EE4')
@@ -39,7 +36,7 @@ function run(message, args) { //message = event | args = args
                     { name: "Usertag", value: usertag, inline: true },
                     { name: "Server Role", value: role, inline: true },
 
-                    { name: "Level", value: "Level ", inline: true },
+                    { name: "Level", value: `LeveL ${level}`, inline: true },
                     { name: "Points", value: "8 Points", inline: true },
                     { name: "Rank", value: "#1", inline: true },
 
