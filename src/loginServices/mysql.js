@@ -122,6 +122,13 @@ async function queryStatement(statement) {
     });
 }
 
+/**
+ * Update rows
+ * @param table
+ * @param condition
+ * @param update
+ * @returns {Promise<unknown>}
+ */
 async function updateRows(table, condition, update) {
     return new Promise(function (resolve, reject) {
         let updateCondition = update.join((', '));
@@ -138,6 +145,23 @@ async function updateRows(table, condition, update) {
     });
 }
 
+/**
+ * Custom query without return
+ * @param statement
+ * @returns {Promise<unknown>}
+ */
+async function queryVoid(statement) {
+    return new Promise(function (resolve, reject) {
+        con.query(statement, (err, res) => {
+            if (err) {
+                reject(err);
+            }
+
+            resolve(true);
+        });
+    });
+}
+
 ///////
 module.exports = {
     addRow,
@@ -145,5 +169,6 @@ module.exports = {
     queryAll,
     deleteRows,
     updateRows,
-    queryStatement
+    queryStatement,
+    queryVoid
 }
