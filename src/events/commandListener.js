@@ -3,7 +3,7 @@ const fs = require('fs')
 
 console.log("=> Initing discord module: CommandListener...")
 
-common.data['discord'].client.on('message', (message) => {
+common.data['discord'].client.on('message', async (message) => {
     if (message.author.bot) return;
     if (!message.content.startsWith(common.data['config'].BOT_PREFIX)) return;
 
@@ -14,7 +14,7 @@ common.data['discord'].client.on('message', (message) => {
     if (!cmd) return;
     if (!message.member.hasPermission(cmd.permissions)) return;
 
-    cmd.run(message, args);
+    await cmd.run(message, args);
 });
 
 common.data['discord'].commands = {};
