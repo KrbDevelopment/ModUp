@@ -2,7 +2,7 @@ console.log("=> Initing discord command: Clear")
 
 const name = "clear"
 
-function run(message, args) {
+async function run(message, args) {
     const count = parseInt(args[0]);
 
     if (count) {
