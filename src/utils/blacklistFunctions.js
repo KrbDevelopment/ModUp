@@ -34,7 +34,7 @@ async function isUrl(s, guildId) {
 
     let allowed = false;
     links.forEach((link) => {
-        const formatted = link.replaceAll('https://').replaceAll('http://').replaceAll('www.')
+        const formatted = link?.replaceAll('https://').replaceAll('http://').replaceAll('www.')
         if (s.toLowerCase().startsWith(link))
             allowed = true;
     })
