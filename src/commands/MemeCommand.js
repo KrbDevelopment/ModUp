@@ -1,6 +1,4 @@
 const {logConsole} = require("../utils/logFunctions");
-const fs = require('fs')
-const request = require('request')
 const axios = require('axios')
 const common = require("../../common");
 
