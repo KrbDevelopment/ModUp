@@ -6,7 +6,10 @@ const {getTextChannelFromMention} = require("../utils/mentionFunctions");
 const {logConsole} = require("../utils/logFunctions");
 logConsole('Initing discord command: StreamAnnounces...', "CMD/INFO", "");
 
-const name = "streamannounces"
+const name = "streamannounces",
+    category = "Generic",
+    shortHelp = `We didn't set a message yet`,
+    longHelp = `We didn't set a message yet`;
 
 async function run(message, args) {
     switch (args[0]) {

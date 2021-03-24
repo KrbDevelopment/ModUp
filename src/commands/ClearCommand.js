@@ -1,7 +1,10 @@
 const {logConsole} = require("../utils/logFunctions");
 logConsole('Initing discord command: Clear...', "CMD/INFO", "");
 
-const name = "clear"
+const name = "clear",
+    category = "Generic",
+    shortHelp = `We didn't set a message yet`,
+    longHelp = `We didn't set a message yet`;
 
 async function run(message, args) {
     const count = parseInt(args[0]);

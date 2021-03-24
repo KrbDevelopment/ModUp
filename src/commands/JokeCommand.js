@@ -4,7 +4,10 @@ const common = require("../../common");
 
 logConsole('Initing discord command: Joke...', "CMD/INFO", "");
 
-const name = "joke"
+const name = "joke",
+    category = "Generic",
+    shortHelp = `We didn't set a message yet`,
+    longHelp = `We didn't set a message yet`;
 
 async function run(message, args) {
     let joke = await axios.get("https://official-joke-api.appspot.com/random_joke", {});

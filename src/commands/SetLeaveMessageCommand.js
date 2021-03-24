@@ -8,7 +8,10 @@ const {getEmbedFromCode} = require("../utils/embedInterpreter");
 
 logConsole('Initing discord command: SetLeaveMessage...', "CMD/INFO", "");
 
-const name = "setleavemessage"
+const name = "setleavemessage",
+    category = "Generic",
+    shortHelp = `We didn't set a message yet`,
+    longHelp = `We didn't set a message yet`;
 
 async function run(message, args) {
     if (args.length <= 0) {

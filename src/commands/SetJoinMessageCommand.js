@@ -8,7 +8,10 @@ const {getEmbedFromCode} = require("../utils/embedInterpreter");
 
 logConsole('Initing discord command: SetJoinMessage...', "CMD/INFO", "");
 
-const name = "setjoinmessage"
+const name = "setjoinmessage",
+    category = "Generic",
+    shortHelp = `We didn't set a message yet`,
+    longHelp = `We didn't set a message yet`;
 
 async function run(message, args) {
     if (args.length <= 0) {

@@ -4,7 +4,10 @@ const settings = require("../utils/settingsFunctions");
 const {logConsole} = require("../utils/logFunctions");
 logConsole('Initing discord command: UserInfo...', "CMD/INFO", "");
 
-const name = "userinfo"
+const name = "userinfo",
+    category = "Generic",
+    shortHelp = `We didn't set a message yet`,
+    longHelp = `We didn't set a message yet`;
 
 async function run(message, args) { //message = event | args = args
     const discord = common.data['discord'].discord

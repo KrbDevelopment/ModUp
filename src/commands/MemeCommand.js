@@ -4,7 +4,10 @@ const common = require("../../common");
 
 logConsole('Initing discord command: Meme...', "CMD/INFO", "");
 
-const name = "meme"
+const name = "meme",
+    category = "Generic",
+    shortHelp = `We didn't set a message yet`,
+    longHelp = `We didn't set a message yet`;
 
 async function run(message, args) {
     let meme = await axios.get("https://meme-api.herokuapp.com/gimme", {});
