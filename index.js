@@ -1,5 +1,6 @@
 const common = require('./common');
 const fs = require('fs')
+const {logConsole} = require("./src/utils/logFunctions");
 
 console.log(`
 
@@ -18,9 +19,9 @@ $$ | \_/ $$ |\$$$$$$  |\$$$$$$$ |\$$$$$$  |$$ |
 
 
 
-console.log("=> Init configiguration file...");
+logConsole("Init configiguration file...", "CONFIG/INFO", "");
 const config = require("./config.json");
-console.log("=> Successfully initted configuration file");
+logConsole("Successfully initted configuration file", "CONFIG/INFO", "");
 
 common.data['config'] = config;
 

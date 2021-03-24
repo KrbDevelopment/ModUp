@@ -1,8 +1,9 @@
 const common = require("../../common");
 const fs = require('fs')
 const mysql = require('mysql')
+const {logConsole} = require("../utils/logFunctions")
 
-console.log("=> Connecting to mysql...");
+logConsole("Connecting to mysql...", "SERVICE/INFO", "");
 const con = mysql.createConnection({
     connectionLimit: 100,
     host: common.data['config'].MYSQL_HOST,
@@ -10,6 +11,7 @@ const con = mysql.createConnection({
     password: common.data['config'].MYSQL_PASS,
     database: common.data['config'].MYSQL_DB
 });
+logConsole("Successfully connected to mysql", "SERVICE/INFO", "");
 
 /**
  * Add Row into table
@@ -19,7 +21,6 @@ const con = mysql.createConnection({
  * @returns {Promise<unknown>}
  */
 function addRow(table, cols, data) {
-    console.log(data)
     return new Promise(function (resolve, reject) {
         const colSeparated = cols.join(', ');
         let emptyPlaceholders = "";
@@ -29,7 +30,7 @@ function addRow(table, cols, data) {
         emptyPlaceholders += '?'
         let insertQuery = `INSERT INTO ${table} (${colSeparated}) VALUES (${emptyPlaceholders})`;
         let query = mysql.format(insertQuery, data);
-        console.log(query)
+
         con.query(query, (err, res) =>  {
            if (err) {
                reject(err);

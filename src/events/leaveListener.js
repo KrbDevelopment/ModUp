@@ -1,10 +1,11 @@
 const common = require("../../common");
 const fs = require('fs')
 const mysql = require("../loginServices/mysql");
+const {logConsole} = require("../utils/logFunctions");
 const {replaceArray} = require("../utils/genericFunctions");
 const {getEmbedFromCode} = require("../utils/embedInterpreter");
 
-console.log("=> Initing discord module: LeaveListener...")
+logConsole('Initing discord module: LeaveListener...', "EVENT/INFO", "");
 
 common.data['discord'].client.on('guildMemberRemove', (member) => {
     const replacements = {

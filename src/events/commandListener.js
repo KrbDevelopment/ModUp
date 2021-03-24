@@ -1,7 +1,8 @@
 const common = require("../../common");
 const fs = require('fs')
+const {logConsole} = require("../utils/logFunctions");
 
-console.log("=> Initing discord module: CommandListener...")
+logConsole('Initing discord module: CommandListener...', "EVENT/INFO", "");
 
 common.data['discord'].client.on('message', async (message) => {
     if (message.author.bot) return;

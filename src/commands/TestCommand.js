@@ -1,4 +1,5 @@
-console.log("=> Initing discord command: Test")
+const {logConsole} = require("../utils/logFunctions");
+logConsole('Initing discord command: Test...', "CMD/INFO", "");
 
 const name = "test"
 

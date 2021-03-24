@@ -2,10 +2,11 @@ const common = require("../../common");
 const mentionF = require("../utils/mentionFunctions")
 const messageF = require("../utils/messageFunctions");
 const mysql = require("../loginServices/mysql");
+const {logConsole} = require("../utils/logFunctions");
 const {getSuccessMessage, getErrorMessage} = require("../utils/messageFunctions");
 const {getEmbedFromCode} = require("../utils/embedInterpreter");
 
-console.log("=> Initing discord command: SetLeaveMessage")
+logConsole('Initing discord command: SetLeaveMessage...', "CMD/INFO", "");
 
 const name = "setleavemessage"
 
@@ -53,7 +54,7 @@ async function run(message, args) {
             })
             .catch((err) => {
                 message.channel.send(messageF.getErrorMessage('We were unable to set your message. Please report this issue to a ModUp developer.'));
-                console.log(err.stack)
+                logConsole(err.stack, "CMD/SET_LEAVE_MESSAGE", "");
             });
     }
 }

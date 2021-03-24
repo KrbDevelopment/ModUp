@@ -1,7 +1,8 @@
 const common = require("../../common");
 const ranking = require("../utils/rankingFunctions");
 const settings = require("../utils/settingsFunctions");
-console.log("=> Initing discord command: Userinfo")
+const {logConsole} = require("../utils/logFunctions");
+logConsole('Initing discord command: UserInfo...', "CMD/INFO", "");
 
 const name = "userinfo"
 
@@ -21,11 +22,12 @@ async function run(message, args) { //message = event | args = args
 
     var join_date = author.joinedAt.toLocaleDateString("en-US", options) + " " + author.joinedAt.toTimeString("it-IT").slice(0, 5)
     var create_date = author.user.createdAt.toLocaleDateString("en-US", options) + " " + author.user.createdAt.toTimeString("it-IT").slice(0, 5)
+    var status = ""
 
     if (author.premiumSince === null) {
-        var status = "Member"
+        status = "Member"
     } else {
-        var status = "Server Booster"
+        status = "Server Booster"
     }
 
     const level = await ranking.getMemberLevel(message.guild.id, author.user.id);
@@ -59,7 +61,6 @@ async function run(message, args) { //message = event | args = args
         .setFooter('modup.pro', 'https://i.imgur.com/VXk9cY8.png')
 
     message.channel.send(UserinfoEmbed);
-
 }
 
 module.exports = {

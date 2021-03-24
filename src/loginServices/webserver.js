@@ -1,10 +1,10 @@
 const common = require("../../common");
 const fs = require('fs')
 const express = require('express')
+const {logConsole} = require("../utils/logFunctions");
 
-console.log("=> Connecting to rest api server...");
+logConsole("Connecting to rest api server...", "SERVICE/INFO", "");
 const app = express()
-console.log("=> Successfully connected to rest api server");
 
 const port = common.data['config'].WEB_PORT;
 
@@ -21,5 +21,7 @@ fs.readdir('./src/restapi/', (err, files) => {
 });
 
 app.listen(port, () => {
-    console.log(`=> Rest api listening at http://localhost:${port}`)
+    logConsole(`Rest api listening at http://localhost:${port}`, "RESTAPI/INFO", "");
 });
+
+logConsole("Successfully connected to rest api server", "SERVICE/INFO", "");

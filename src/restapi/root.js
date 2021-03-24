@@ -1,6 +1,7 @@
 const common = require("../../common");
+const {logConsole} = require("../utils/logFunctions");
 
 common.data['webserver'].app.get('/', (req, res) => {
     res.send('Hello World!')
 })
-console.log("=> Successfully initted HTTP/GET for route '/'");
+logConsole("Successfully initted HTTP/GET for route '/'", "RESTAPI/ROUTE", "");
