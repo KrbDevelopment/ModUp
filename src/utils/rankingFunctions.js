@@ -1,6 +1,8 @@
 const common = require("../../common");
 const mysql = require("../loginServices/mysql");
 const settings = require("../utils/settingsFunctions");
+const discord = require("discord.js");
+
 
 function getMemberLevel(guild, userid) {
     return new Promise(function (resolve, reject) {
@@ -28,18 +30,43 @@ function getMemberRank(guild, userid) {
 }
 
 function addMemberPoints(guild, userid, points) {
+    var guildid = guild.id
     return new Promise(function (resolve, reject) {
-        mysql.updateRows("member", [`guild = ${guild}`, `uuid = ${userid}`], [`points = points + ${points}`])
+        mysql.updateRows("member", [`guild = ${guildid}`, `uuid = ${userid}`], [`points = points + ${points}`])
             .then((res) => {
                 resolve(res.affectedRows);
             });
     });
 }
 
-function MemberLevelup(guild, userid, level) {
+
+async function MemberLevelup(guild, userid, level) {
     return new Promise(function (resolve, reject) {
-        mysql.updateRows("member", [`guild = ${guild}`, `uuid = ${userid}`], [`level = ${level}`, `points = 0`])
-            .then((res) => {
+        console.log("levelup function")
+        mysql.updateRows("member", [`guild = ${guild.id}`, `uuid = ${userid}`], [`level = ${level}`, `points = 0`])
+            .then(async (res) => {
+
+            const levelup_channel = "824025876723138570";
+            console.log(levelup_channel)
+
+            var channel = guild.channels.cache.get(levelup_channel)
+            console.log(channel);
+
+            const bot_name = await settings.getServerSetting(guild.id, "bot_name");
+            const bot_picture = await settings.getServerSetting(guild.id, "bot_picture");
+            const bot_color = await settings.getServerSetting(guild.id, "bot_color");
+
+            console.log(bot_name + " | " + bot_picture + " | " + bot_color + " | ")
+
+            const LevelupCard = new discord.MessageEmbed()
+                .setColor(bot_color)
+                .setAuthor(bot_name, bot_picture)
+                .addField("New Levelup", "<@!"+ userid +">, you have reached a new Levelup!", false)
+                .addField("Current Level", "Your new Level is now " + level, false)
+
+
+            channel.send(LevelupCard);
+
             resolve(res.affectedRows);
         });
     });
@@ -49,12 +76,20 @@ async function addMemberMessagePoints(guild, userid) {
     var ppm = parseInt(await settings.getServerSetting(guild, "rank_ppm"));
     var factor = parseInt(await settings.getServerSetting(guild, "rank_factor"));
 
-    let level = await getMemberLevel(guild, userid)
-    var points = await getMemberPoints(guild, userid)
+    var guildid = guild.id
 
-    if (level * factor < points + ppm) {
+    let level = await getMemberLevel(guildid, userid)
+    var points = await getMemberPoints(guildid, userid)
+
+    var rechnung = points + ppm
+    console.log(rechnung)
+    console.log(level * factor + " <= " +  rechnung)
+    if (level * factor <= points + ppm) {
         level += 1
+
+        console.log("a new Levelup registered")
         await MemberLevelup(guild, userid, level)
+
 
     } else {
         await addMemberPoints(guild, userid, ppm)
@@ -62,10 +97,26 @@ async function addMemberMessagePoints(guild, userid) {
     }
 }
 
+async function getRankbar(guild, level, points) {
+    var factor = parseInt(await settings.getServerSetting(guild, "rank_factor"));
+    var percentage = parseFloat((points / (level * factor))) * 100;
+
+    var count = 0;
+    while (percentage >= 10) {
+        count++;
+        percentage -= 10;
+    }
+
+    var filled = ":blue_square:";
+    var empty = ":white_large_square:";
+
+    return filled.repeat(count) + empty.repeat(10-count);
+}
 
 module.exports = {
     getMemberLevel,
     getMemberPoints,
     getMemberRank,
-    addMemberMessagePoints
+    addMemberMessagePoints,
+    getRankbar
 }
