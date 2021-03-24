@@ -34,6 +34,7 @@ function addRow(table, cols, data) {
         con.query(query, (err, res) =>  {
            if (err) {
                reject(err);
+               return;
            }
 
             resolve(res.insertId);
@@ -55,6 +56,7 @@ async function queryAll(table, condition) {
         con.query(selectQuery, (err, res) => {
             if (err) {
                 reject(err);
+                return;
             }
 
             resolve(res);
@@ -99,6 +101,7 @@ async function deleteRows(table, condition) {
         con.query(selectQuery, (err, res) => {
             if (err) {
                 reject(err);
+                return;
             }
 
             resolve(res.affectedRows);
@@ -116,6 +119,7 @@ async function queryStatement(statement) {
         con.query(statement, (err, res) => {
             if (err) {
                 reject(err);
+                return;
             }
 
             resolve(res);
@@ -156,6 +160,7 @@ async function queryVoid(statement) {
         con.query(statement, (err, res) => {
             if (err) {
                 reject(err);
+                return;
             }
 
             resolve(true);
