@@ -8,6 +8,7 @@ logConsole("Connecting to discord...", "SERVICE/INFO", "");
 client.login(common.data.config.BOT_TOKEN).then(() => {
     logConsole("Successfully connected to discord", "SERVICE/INFO", "");
 
+    client.user.setActivity('invite.modup.pro', { type: 'PLAYING' });
     common.data['discord'] = {
         discord: Discord,
         client: client
