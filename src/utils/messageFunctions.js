@@ -24,7 +24,20 @@ function getSuccessMessage(title, description) {
     return embed;
 }
 
+function getWarningMessage(title, description) {
+    const embed = new common.data['discord'].discord.MessageEmbed();
+
+    embed.setColor('#cf551c')
+    embed.setTitle(title)
+    embed.setDescription(description)
+    embed.setAuthor("ModUp")
+    embed.setTimestamp(Date.now())
+
+    return embed;
+}
+
 module.exports = {
     getErrorMessage,
-    getSuccessMessage
+    getSuccessMessage,
+    getWarningMessage
 }
