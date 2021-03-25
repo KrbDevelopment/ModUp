@@ -1,0 +1,13 @@
+{
+  "name": "US English",
+  "code": "en-US",
+  "description": "American English translations for ModUp Discord Bot",
+  "author": "JanKrb",
+  "translations": {
+    "TestCMD_Name": "test",
+    "TestCMD_Category": "Testing",
+    "TestCMD_ShortHelp": "The test command is designed to test, if the bot is replying. Also it's used for the developers to test new commands.",
+    "TestCMD_LongHelp": "The test command is designed to test, if the bot is replying. Also it's used for the developers to test new commands.",
+    "TestCMD_RunMessage": "Test succeed"
+  }
+}

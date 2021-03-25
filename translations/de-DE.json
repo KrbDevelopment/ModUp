@@ -1,0 +1,13 @@
+{
+  "name": "Deutsch",
+  "code": "de-DE",
+  "description": "Deutsche Übersetzung für den ModUp Discord Bot",
+  "author": "JanKrb",
+  "translations": {
+    "TestCMD_Name": "test",
+    "TestCMD_Category": "Testung",
+    "TestCMD_ShortHelp": "Der Test Befehl ist gedacht, um zu prüfen, ob der Bot antwortet. Außerdem wird er von den Entwicklern zum testen von neuen Befehlen verwendet.",
+    "TestCMD_LongHelp": "Der Test Befehl ist gedacht, um zu prüfen, ob der Bot antwortet. Außerdem wird er von den Entwicklern zum testen von neuen Befehlen verwendet.",
+    "TestCMD_RunMessage": "Test erfolgreich"
+  }
+}

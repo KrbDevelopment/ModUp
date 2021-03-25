@@ -1,14 +1,15 @@
+const {getTranslationString} = require("../../common");
 const {logConsole} = require("../utils/logFunctions");
 logConsole('Initing discord command: Test...', "CMD/INFO", "");
 
-const name = "test",
-    category = "Testing",
-    shortHelp = `The test command is designed to test, if the bot is replying. Also it's used for the developers to test new commands.`,
-    longHelp = `The test command is designed to test, if the bot is replying. Also it's used for the developers to test new commands.`;
+const name = getTranslationString('en-US', 'TestCMD_Name'),
+    category = getTranslationString('en-US', 'TestCMD_Category'),
+    shortHelp = getTranslationString('en-US', 'TestCMD_ShortHelp'),
+    longHelp = getTranslationString('en-US', 'TestCMD_LongHelp');
 
 
 async function run(message, args) {
-    message.channel.send("Test success").catch(console.error)
+    message.channel.send(getTranslationString('en-US', 'TestCMD_RunMessage')).catch(console.error)
 }
 
 module.exports = {
