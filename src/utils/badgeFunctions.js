@@ -31,9 +31,17 @@ function giveMemberBadge(guild, userid, identifier) {
     })
 }
 
+function removeMemberBadge(guild, userid, identifier) {
+    common.database['badges'] = common.database['badges'].filter(function (e) {
+        return (e.guild === guild && e.uuid === userid && e.identifier === identifier)
+    })
+    mysql.deleteRows("member_badges", [`guild = ${guild}`, `uuid = ${userid}`, `identifier = "${identifier}"`])
+}
+
 module.exports = {
     getMemberBadges,
     getMemberBadge,
     getBadgeInfo,
-    giveMemberBadge
+    giveMemberBadge,
+    removeMemberBadge
 }

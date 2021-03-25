@@ -27,23 +27,38 @@ async function run(message, args) { //message = event | args = args
 
     const member_badges = await badges.getMemberBadges(guild, author.id);
 
-    const BadgeCard = new discord.MessageEmbed()
-        .setColor(bot_color)
-        .setAuthor(bot_name, bot_picture)
-        .setDescription("Your Badges")
+    console.log(member_badges.length)
+    if (member_badges.length === 0) {
+        const BadgeCard = new discord.MessageEmbed()
+            .setColor(bot_color)
+            .setAuthor(bot_name, bot_picture)
+            .setDescription("Your Badges")
 
-        .addField("Nickname", nickname, false)
+            .addField(":bookmark: Information", "You currently have no Badges", false)
 
-        .setTimestamp()
-        .setFooter('modup.pro', 'https://i.imgur.com/VXk9cY8.png')
+            .setTimestamp()
+            .setFooter('modup.pro', 'https://i.imgur.com/VXk9cY8.png')
 
-    for (const badge of member_badges) {
-        const badge_info = badges.getBadgeInfo(guild, badge.identifier);
-        BadgeCard.addField(badge_info.icon +"  "+ badge_info.name, badge_info.description, true)
+        message.channel.send(BadgeCard);
+
+    } else {
+        const BadgeCard = new discord.MessageEmbed()
+            .setColor(bot_color)
+            .setAuthor(bot_name, bot_picture)
+            .setDescription("Your Badges")
+
+            .addField(":label: Nickname", nickname, false)
+
+            .setTimestamp()
+            .setFooter('modup.pro', 'https://i.imgur.com/VXk9cY8.png')
+
+        for (const badge of member_badges) {
+            const badge_info = badges.getBadgeInfo(guild, badge.identifier);
+            BadgeCard.addField(badge_info.icon +"  "+ badge_info.name, badge_info.description, true)
+        }
+
+        message.channel.send(BadgeCard);
     }
-
-    message.channel.send(BadgeCard);
-
 }
 
 module.exports = {

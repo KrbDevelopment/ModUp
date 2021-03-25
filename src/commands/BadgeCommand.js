@@ -59,7 +59,10 @@ async function run(message, args) { //message = event | args = args
                     return e.identifier === args[2]
                 })[0];
 
-                if (!member_badge) {
+                if (member_badge) {
+
+                    badges.removeMemberBadge(message.guild.id, author.id, args[2])
+
                     const removeBadgeCard = new discord.MessageEmbed()
                         .setColor(bot_color)
                         .setAuthor(bot_name, bot_picture)
