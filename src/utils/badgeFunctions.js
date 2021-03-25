@@ -11,13 +11,13 @@ function getMemberBadges(guild, userid) {
 function getMemberBadge(guild, userid, identifier) {
     return common.database['member_badges'].filter(function (e) {
         return (e.guild === guild && e.uuid === userid && e.identifier === identifier)
-    }).get(0);
+    })[0];
 }
 
 function getBadgeInfo(guild, identifier) {
     return common.database['badges'].filter(function (e) {
        return (e.guild === guild && e.identifier === identifier)
-    }).get(0);
+    })[0];
 }
 
 function giveMemberBadge(guild, userid, identifier) {

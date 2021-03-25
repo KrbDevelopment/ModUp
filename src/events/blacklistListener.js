@@ -8,6 +8,7 @@ logConsole('Initing discord module: BlackListListener...', "EVENT/INFO", "");
 
 common.data['discord'].client.on('message', async (message) => {
     if (message.author.bot) return;
+    if (message.content.startsWith(common.data['config'].BOT_PREFIX)) return;
 
     const message_parts = message.content.split(' ')
     for (const m in message_parts) {
