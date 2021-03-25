@@ -21,7 +21,7 @@ function getBadgeInfo(guild, identifier) {
 }
 
 function giveMemberBadge(guild, userid, identifier) {
-    common.database['badges'].push({
+    common.database['member_badges'].push({
         guild,
         uuid: userid,
         identifier
