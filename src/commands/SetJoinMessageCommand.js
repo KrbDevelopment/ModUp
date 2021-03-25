@@ -64,7 +64,7 @@ function addJoinMsg(message, args) {
     }) - 1];
 
     message.channel.send(messageF.getSuccessMessage('Successfully changed join message', `You successfully changed the join message`));
-    mysql.addRow('guild_messages', ['guildId', 'creatorId', 'channelId', 'type', 'message'], [message.guild.id, message.author.id, message.channel.id, 'join', args[1]])mysql.addRow("member_badges", ["guild", "uuid", "identifier"], [guild, userid, identifier]).then((res) => {
+    mysql.addRow('guild_messages', ['guildId', 'creatorId', 'channelId', 'type', 'message'], [message.guild.id, message.author.id, message.channel.id, 'join', args[1]]).then((res) => {
         newElement.id = res
     })
 }
