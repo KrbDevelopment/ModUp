@@ -59,15 +59,17 @@ async function addStreamer(message, args) {
     const channel = getTextChannelFromMention(args[1])
     const twitchName = args[2]
 
-    common.database['guild_streamers'].push({
+    var newElement = common.database['guild_streamers'][common.database['guild_streamers'].push({
         guildId: message.guild.id,
         channelId: channel.id,
         creatorId: message.author.id,
         twitchName: twitchName
-    })
+    }) - 1]
     message.channel.send(getSuccessMessage("Streamer added", "You've successfully added a streamer to your announcements"))
 
-    mysql.addRow('guild_streamers', ['guildId', 'channelId', 'creatorId', 'twitchName'], [message.guild.id, channel.id, message.author.id, twitchName])
+    mysql.addRow('guild_streamers', ['guildId', 'channelId', 'creatorId', 'twitchName'], [message.guild.id, channel.id, message.author.id, twitchName]).then((res) => {
+        newElement.id = res
+    })
 }
 
 async function removeStreamer(message, args) {

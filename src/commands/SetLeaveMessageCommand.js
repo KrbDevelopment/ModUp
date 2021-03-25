@@ -55,16 +55,18 @@ function addMsgs(message, args) {
         return;
     }
 
-    common.database['guild_messages'].push({
+    var newElement = [common.database['guild_messages'].push({
         guildId: message.guild.id,
         creatorId: message.author.id,
         channelId: message.channel.id,
         type: 'leave',
         message: args[1]
-    });
+    }) - 1];
 
     message.channel.send(messageF.getSuccessMessage('Successfully changed leave message', `You successfully changed the leave message`));
-    mysql.addRow('guild_messages', ['guildId', 'creatorId', 'channelId', 'type', 'message'], [message.guild.id, message.author.id, message.channel.id, 'leave', args[1]])
+    mysql.addRow('guild_messages', ['guildId', 'creatorId', 'channelId', 'type', 'message'], [message.guild.id, message.author.id, message.channel.id, 'leave', args[1]]).then((res) => {
+        newElement.id = res
+    })
 }
 
 function removeMsgs(message, args) {

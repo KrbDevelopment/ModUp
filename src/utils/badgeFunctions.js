@@ -21,12 +21,14 @@ function getBadgeInfo(guild, identifier) {
 }
 
 function giveMemberBadge(guild, userid, identifier) {
-    common.database['member_badges'].push({
+    var newElement = [common.database['member_badges'].push({
         guild,
         uuid: userid,
         identifier
+    }) - 1]
+    mysql.addRow("member_badges", ["guild", "uuid", "identifier"], [guild, userid, identifier]).then((res) => {
+        newElement.id = res
     })
-    mysql.addRow("member_badges", ["guild", "uuid", "identifier"], [guild, userid, identifier])
 }
 
 module.exports = {

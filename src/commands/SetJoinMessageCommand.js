@@ -55,16 +55,18 @@ function addJoinMsg(message, args) {
         return;
     }
 
-    common.database['guild_messages'].push({
+    var newElement = [common.database['guild_messages'].push({
         guildId: message.guild.id,
         creatorId: message.author.id,
         channelId: message.channel.id,
         type: 'join',
         message: args[1]
-    });
+    }) - 1];
 
     message.channel.send(messageF.getSuccessMessage('Successfully changed join message', `You successfully changed the join message`));
-    mysql.addRow('guild_messages', ['guildId', 'creatorId', 'channelId', 'type', 'message'], [message.guild.id, message.author.id, message.channel.id, 'join', args[1]])
+    mysql.addRow('guild_messages', ['guildId', 'creatorId', 'channelId', 'type', 'message'], [message.guild.id, message.author.id, message.channel.id, 'join', args[1]])mysql.addRow("member_badges", ["guild", "uuid", "identifier"], [guild, userid, identifier]).then((res) => {
+        newElement.id = res
+    })
 }
 
 function deleteJoinMsg(message, args) {
