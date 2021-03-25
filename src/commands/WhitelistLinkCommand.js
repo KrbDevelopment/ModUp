@@ -54,7 +54,7 @@ function removeLink(message, args) {
     }
 
     common.database['guild_whitelist_links'] = common.database['guild_whitelist_links'].filter(function (e) {
-        return (e.id !== args[1])
+        return (e.id !== parseInt(args[1]))
     })
     message.channel.send(getSuccessMessage("Whitelist deleted", "You've successfully deleted a link to your whitelist"))
 
@@ -66,14 +66,17 @@ function addLink(message, args) {
         message.channel.send(getErrorMessage('Please provide a valid url id'))
     }
 
-    common.database['guild_whitelist_links'].push({
+    const newElement = common.database['guild_whitelist_links'][common.database['guild_whitelist_links'].push({
         guildId: message.guild.id,
         creatorId: message.author.id,
         url: args[1]
-    });
+    }) - 1]
+
     message.channel.send(getSuccessMessage("Whitelist added", "You've successfully added a link to your whitelist"))
 
-    mysql.addRow('guild_whitelist_links', ['guildId', 'creatorId', 'url'], [message.guild.id, message.author.id, args[1]])
+    mysql.addRow('guild_whitelist_links', ['guildId', 'creatorId', 'url'], [message.guild.id, message.author.id, args[1]]).then((res) => {
+        newElement.id = res
+    })
 }
 
 module.exports = {
