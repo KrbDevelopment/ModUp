@@ -1,13 +1,9 @@
 const common = require("../../common");
 const badges = require("../utils/badgeFunctions");
 const settings = require("../utils/settingsFunctions");
-const {logConsole} = require("../utils/logFunctions");
-logConsole('Initing discord command: Badges...', "CMD/INFO", "");
+console.log("=> Initing discord command: Rank")
 
-const name = "badges",
-    category = "Generic",
-    shortHelp = `We didn't set a message yet`,
-    longHelp = `We didn't set a message yet`;
+const name = "badges"
 
 async function run(message, args) { //message = event | args = args
     const discord = common.data['discord'].discord
@@ -25,6 +21,7 @@ async function run(message, args) { //message = event | args = args
     const bot_color = await settings.getServerSetting(message.guild.id, "bot_color");
 
     const member_badges = await badges.getMemberBadges(message.guild.id, author.id);
+    const guild = message.guild.id
 
     const BadgeCard = new discord.MessageEmbed()
         .setColor(bot_color)
@@ -36,9 +33,10 @@ async function run(message, args) { //message = event | args = args
         .setTimestamp()
         .setFooter('modup.pro', 'https://i.imgur.com/VXk9cY8.png')
 
-    member_badges.forEach(function (badge) {
-        BadgeCard.addField(badge.icon + badge.name, badge.description, true)
-    });
+    for (const badge of member_badges) {
+        const badge_info = await badges.getBadgeInfo(guild, badge.identifier);
+        BadgeCard.addField(badge_info.icon +"  "+ badge_info.name, badge_info.description, true)
+    }
 
     message.channel.send(BadgeCard);
 
