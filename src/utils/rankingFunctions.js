@@ -59,10 +59,10 @@ async function MemberLevelup(guild, userid, level) {
 }
 
 async function addMemberMessagePoints(guild, userid) {
-    var ppm = parseInt(await settings.getServerSetting(guild, "rank_ppm"));
-    var factor = parseInt(await settings.getServerSetting(guild, "rank_factor"));
-
     var guildid = guild.id
+    var ppm = parseInt(await settings.getServerSetting(guildid, "rank_ppm"));
+    var factor = parseInt(await settings.getServerSetting(guildid, "rank_factor"));
+
 
     let level = await getMemberLevel(guildid, userid)
     var points = await getMemberPoints(guildid, userid)
