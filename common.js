@@ -30,6 +30,7 @@ const database = {
     "roles": {},
     "statistics": {},
     "users": {},
+    "badges": {},
 }
 
 module.exports = {

@@ -19,13 +19,13 @@ async function run(message, args) { //message = event | args = args
     }
 
     var nickname = author.user.username
-
-    const bot_name = await settings.getServerSetting(message.guild.id, "bot_name");
-    const bot_picture = await settings.getServerSetting(message.guild.id, "bot_picture");
-    const bot_color = await settings.getServerSetting(message.guild.id, "bot_color");
-
-    const member_badges = await badges.getMemberBadges(message.guild.id, author.id);
     const guild = message.guild.id
+
+    const bot_name = await settings.getServerSetting(guild, "bot_name");
+    const bot_picture = await settings.getServerSetting(guild, "bot_picture");
+    const bot_color = await settings.getServerSetting(guild, "bot_color");
+
+    const member_badges = await badges.getMemberBadges(guild, author.id);
 
     const BadgeCard = new discord.MessageEmbed()
         .setColor(bot_color)
@@ -38,7 +38,7 @@ async function run(message, args) { //message = event | args = args
         .setFooter('modup.pro', 'https://i.imgur.com/VXk9cY8.png')
 
     for (const badge of member_badges) {
-        const badge_info = await badges.getBadgeInfo(guild, badge.identifier);
+        const badge_info = badges.getBadgeInfo(guild, badge.identifier);
         BadgeCard.addField(badge_info.icon +"  "+ badge_info.name, badge_info.description, true)
     }
 
