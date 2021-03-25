@@ -1,9 +1,12 @@
 const common = require("../../common");
 const badges = require("../utils/badgeFunctions");
 const settings = require("../utils/settingsFunctions");
-console.log("=> Initing discord command: Rank")
+logConsole('Initing discord command: Badges...', "CMD/INFO", "");
 
-const name = "badges"
+const name = "badges",
+    category = "Generic",
+    shortHelp = `We didn't set a message yet`,
+    longHelp = `We didn't set a message yet`;
 
 async function run(message, args) { //message = event | args = args
     const discord = common.data['discord'].discord
