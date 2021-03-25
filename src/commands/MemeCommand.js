@@ -22,7 +22,10 @@ async function run(message, args) {
 }
 
 module.exports = {
-    name: name,
-    run: run,
+    name,
+    category,
+    shortHelp,
+    longHelp,
+    run,
     permissions: []
 }

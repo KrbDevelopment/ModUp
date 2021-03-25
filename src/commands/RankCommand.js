@@ -1,9 +1,13 @@
 const common = require("../../common");
 const ranking = require("../utils/rankingFunctions");
 const settings = require("../utils/settingsFunctions");
-console.log("=> Initing discord command: Rank")
+const {logConsole} = require("../utils/logFunctions");
+logConsole('Initing discord command: Rank...', "CMD/INFO", "");
 
-const name = "rank"
+const name = "rank",
+    category = "Generic",
+    shortHelp = `We didn't set a message yet`,
+    longHelp = `We didn't set a message yet`;
 
 async function run(message, args) { //message = event | args = args
     const discord = common.data['discord'].discord
@@ -45,7 +49,10 @@ async function run(message, args) { //message = event | args = args
 }
 
 module.exports = {
-    name: name,
-    run: run,
+    name,
+    category,
+    shortHelp,
+    longHelp,
+    run,
     permissions: ['MANAGE_MESSAGES']
 }

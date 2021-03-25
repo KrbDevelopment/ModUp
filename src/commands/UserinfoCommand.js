@@ -67,7 +67,10 @@ async function run(message, args) { //message = event | args = args
 }
 
 module.exports = {
-    name: name,
-    run: run,
+    name,
+    category,
+    shortHelp,
+    longHelp,
+    run,
     permissions: ['MANAGE_MESSAGES']
 }

@@ -1,6 +1,7 @@
 const common = require("../../common");
 const badges = require("../utils/badgeFunctions");
 const settings = require("../utils/settingsFunctions");
+const {logConsole} = require("../utils/logFunctions");
 logConsole('Initing discord command: Badges...', "CMD/INFO", "");
 
 const name = "badges",
