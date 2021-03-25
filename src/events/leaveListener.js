@@ -15,23 +15,25 @@ common.data['discord'].client.on('guildMemberRemove', (member) => {
         '$$GUILD_ID': member.guild.id
     }
 
-    mysql.queryAll('guild_messages', ['guildId = ' + member.guild.id, 'type = \'leave\'']).then((messages) => {
-        messages.forEach((message) => {
-            getEmbedFromCode(message.message).then((embed) => {
-                embed.title = replaceArray(embed.title, replacements)
-                embed.description = replaceArray(embed.description, replacements)
+    const messages = common.database['guild_messages'].filter(function (e) {
+        return (e.guildId === member.guild.id && e.type === 'leave');
+    })
 
-                if (Object.keys(embed.fields[0]).length > 0) {
-                    embed.fields.forEach((field) => {
-                        field.name = replaceArray(field.name, replacements)
-                        field.value = replaceArray(field.value, replacements)
-                    })
-                } else {
-                    embed.fields = []
-                }
+    messages.forEach((message) => {
+        getEmbedFromCode(message.message).then((embed) => {
+            embed.title = replaceArray(embed.title, replacements)
+            embed.description = replaceArray(embed.description, replacements)
 
-                common.data['discord'].client.channels.cache.get(message.channelId)?.send({embed: embed});
-            });
+            if (Object.keys(embed.fields[0]).length > 0) {
+                embed.fields.forEach((field) => {
+                    field.name = replaceArray(field.name, replacements)
+                    field.value = replaceArray(field.value, replacements)
+                })
+            } else {
+                embed.fields = []
+            }
+
+            common.data['discord'].client.channels.cache.get(message.channelId)?.send({embed: embed});
         });
     });
 });

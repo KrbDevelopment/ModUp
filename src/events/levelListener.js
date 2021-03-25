@@ -11,8 +11,6 @@ common.data['discord'].client.on('message', (message) => {
         var guild = message.guild
         var userid = message.member.id
 
-        ranking.addMemberMessagePoints(guild, userid).then(
-            console.log(message.member.user.username + " recieved a point!")
-        );
+        ranking.addMemberMessagePoints(guild, userid);
     }
 });

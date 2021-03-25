@@ -13,8 +13,28 @@ function getTranslationString(lang, name) {
     return translations ? translation : `Translation ${name} doesn't exists for language ${lang}`
 }
 
+const database = {
+    "embeds": {},
+    "failed_jobs": {},
+    "guild_blacklist_words": {},
+    "guild_messages": {},
+    "guild_settings": {},
+    "guild_streamers": {},
+    "guild_whitelist_links": {},
+    "guilds": {},
+    "member": {},
+    "member_badges": {},
+    "migrations": {},
+    "password_resets": {},
+    "role_permissions": {},
+    "roles": {},
+    "statistics": {},
+    "users": {},
+}
+
 module.exports = {
     translation: translations,
     getTranslationString,
+    database,
     data: []
 }

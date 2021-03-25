@@ -3,18 +3,14 @@ const mysql = require("../loginServices/mysql");
 
 
 function getMemberBadges(guild, userid) {
-    return new Promise(function (resolve, reject) {
-        mysql.queryAll("member_badges", ['guild = ' + guild, 'uuid = ' + userid]).then((res) => {
-            resolve(res);
-        });
+    return common.database['member_badges'].filter(function (e) {
+        return (e.guild === guild && e.uuid === userid)
     });
 }
 
 function getMemberBadge(guild, userid, badge_name) {
-    return new Promise(function (resolve, reject) {
-        mysql.queryAll("member_badges", ['guild = ' + guild, 'uuid = ' + userid, 'badge_name = ' + badge_name]).then((res) => {
-            resolve(res[0]);
-        });
+    return common.database['member_badges'].filter(function (e) {
+        return (e.guild === guild && e.uuid === userid && e.badge_name == badge_name)
     });
 }
 

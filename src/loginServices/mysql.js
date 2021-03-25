@@ -168,6 +168,21 @@ async function queryVoid(statement) {
     });
 }
 
+async function queryAllNoCondi(table_name) {
+    return new Promise(function (resolve, reject) {
+        let selectQuery = `SELECT * FROM ${table_name};`;
+
+        con.query(selectQuery, (err, res) => {
+            if (err) {
+                reject(err);
+                return;
+            }
+
+            resolve(res);
+        });
+    });
+}
+
 ///////
 module.exports = {
     addRow,
@@ -176,5 +191,6 @@ module.exports = {
     deleteRows,
     updateRows,
     queryStatement,
-    queryVoid
+    queryVoid,
+    queryAllNoCondi
 }

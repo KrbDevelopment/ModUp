@@ -22,7 +22,9 @@ async function run(message, args) {
         embed.setFooter("For delete: " + common.data['config'].BOT_PREFIX + "setjoinmessage delete [number]")
         embed.setTimestamp(Date.now())
 
-        const positions = await mysql.queryStatement(`SELECT * FROM guild_messages WHERE guildId = ${message.guild.id} AND type = 'join';`);
+        const positions = common.database['guild_messages'].filter(function (e) {
+            return (e.guildId === message.guild.id && e.type === 'join');
+        })
 
         for await (const position of positions) {
             let embedO = await getEmbedFromCode(position.message);
@@ -37,8 +39,12 @@ async function run(message, args) {
         }
         const positionInt = parseInt(args[1]);
 
-        mysql.queryVoid("DELETE FROM guild_messages WHERE gmId = " + positionInt);
+        common.database['guild_messages'].filter(function (e) {
+            return (e.gmId === positionInt);
+        }).delete()
+
         message.channel.send(getSuccessMessage("Deleted Join Message", "You successfully deleted the join message " + positionInt));
+        mysql.queryVoid("DELETE FROM guild_messages WHERE gmId = " + positionInt);
     } else {
         const targetChannel = mentionF.getTextChannelFromMention(args[0]);
         if (!targetChannel) {
@@ -51,14 +57,16 @@ async function run(message, args) {
             return;
         }
 
+        common.database['guild_messages'].push({
+            guildId: message.guild.id,
+            creatorId: message.author.id,
+            channelId: message.channel.id,
+            type: 'join',
+            message: args[1]
+        });
+
+        message.channel.send(messageF.getSuccessMessage('Successfully changed join message', `You successfully changed the join message`));
         mysql.addRow('guild_messages', ['guildId', 'creatorId', 'channelId', 'type', 'message'], [message.guild.id, message.author.id, message.channel.id, 'join', args[1]])
-            .then((res) => {
-                message.channel.send(messageF.getSuccessMessage('Successfully changed join message', `You successfully changed the join message`));
-            })
-            .catch((err) => {
-                message.channel.send(messageF.getErrorMessage('We were unable to set your message. Please report this issue to a ModUp developer.'));
-                logConsole(err.stack, "CMD/SET_JOIN_MESSAGE", "");
-            });
     }
 }
 

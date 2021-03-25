@@ -3,8 +3,9 @@ const mysql = require("../loginServices/mysql");
 
 async function getEmbedFromCode(code) {
     try {
-        var embedStr = await mysql.querySelected('embeds', ['code'], ['identifier = \''+code+'\'']);
-        embedStr = embedStr[0].code;
+        var embedStr = common.database['embeds'].filter(function (e) {
+            return (e.identifier === code)
+        })[0].code;
         var embedObj = JSON.parse(embedStr)
 
         const embedJS = new common.data['discord'].discord.MessageEmbed();

@@ -6,7 +6,7 @@ function getErrorMessage(description) {
     embed.setColor('#ff0000')
     embed.setTitle('An error occurred')
     embed.setDescription(description)
-    embed.setAuthor("ModUp")
+    embed.setFooter('modup.pro', 'https://i.imgur.com/n6lYSjl.png')
     embed.setTimestamp(Date.now())
 
     return embed;
@@ -18,7 +18,7 @@ function getSuccessMessage(title, description) {
     embed.setColor('#1ba900')
     embed.setTitle(title)
     embed.setDescription(description)
-    embed.setAuthor("ModUp")
+    embed.setFooter('modup.pro', 'https://i.imgur.com/n6lYSjl.png')
     embed.setTimestamp(Date.now())
 
     return embed;
@@ -30,7 +30,7 @@ function getWarningMessage(title, description) {
     embed.setColor('#cf551c')
     embed.setTitle(title)
     embed.setDescription(description)
-    embed.setAuthor("ModUp")
+    embed.setFooter('modup.pro', 'https://i.imgur.com/n6lYSjl.png')
     embed.setTimestamp(Date.now())
 
     return embed;

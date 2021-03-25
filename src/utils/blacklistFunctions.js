@@ -2,26 +2,14 @@ const common = require("../../common");
 const mysql = require("../loginServices/mysql");
 
 async function getBlacklistWords(guildId) {
-    return new Promise(async function (resolve, reject) {
-        mysql.querySelected('guild_blacklist_words', ['word'], ['guildId = \''+guildId+'\''])
-            .then((res) => {
-                resolve(res);
-            })
-            .catch((err) => {
-                reject(err);
-            })
+    return common.database['guild_blacklist_words'].filter(function (e) {
+        return (guildId === guildId)
     });
 }
 
 async function getWhitelistLinks(guildId) {
-    return new Promise(async function (resolve, reject) {
-        mysql.querySelected('guild_whitelist_links', ['url'], ['guildId = \''+guildId+'\''])
-            .then((res) => {
-                resolve(res);
-            })
-            .catch((err) => {
-                reject(err);
-            })
+    return common.database['guild_whitelist_links'].filter(function (e) {
+        return (guildId === guildId)
     });
 }
 

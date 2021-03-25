@@ -2,18 +2,24 @@ const common = require("../../common");
 const mysql = require("../loginServices/mysql");
 
 function getServerSetting(guild, setting) {
-    return new Promise(function (resolve, reject) {
-        mysql.querySelected("guild_settings", ["value"], ['guild = ' + guild, 'setting = "' + setting + '"']).then((res) => {
-            resolve(res[0].value);
-        });
-    });
+    return common.database['guild_settings'].filter(function (e) {
+        return (e.guild === guild.id && e.setting === setting)
+    })[0].value;
 }
 
 
 
 
 function createServerSettings(guild) {
-    mysql.addRow("guilds_settings", ["bot_name", "bot_picture", "bot_color", "description", "rank_ppm", "rank_factor"], ["modup.pro", "https://i.imgur.com/5MMGPRO.png", "#3498DB", "modup.pro", "1", "3"])
+    // Sense?
+    return common.database['guild_settings'].push({
+        bot_name: "modup.pro",
+        bot_picture: "https://i.imgur.com/5MMGPRO.png",
+        bot_color: "#3498DB",
+        description: "modup.pro",
+        rank_ppm: "1",
+        rank_factor: "3"
+    });
 }
 
 

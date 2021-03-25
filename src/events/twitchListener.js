@@ -17,10 +17,13 @@ setInterval(function() {
 }, minutes * 60 * 1000);
 
 async function checkTwitch() {
-    var lookup = await mysql.queryAll('guild_streamers', ['guildID IS NOT null']);
+    var lookup = common.database['guild_streamers'].filter(function (e) {
+        return e.guildId != null
+    });
+
     var streamerNames = lookup.map(function (streamer) {
         return streamer.twitchName
-    })
+    });
 
     var url = 'https://api.twitch.tv/kraken/users?login=' + streamerNames.join(',')
 
