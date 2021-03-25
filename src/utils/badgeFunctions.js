@@ -3,35 +3,30 @@ const mysql = require("../loginServices/mysql");
 
 
 function getMemberBadges(guild, userid) {
-    return new Promise(function (resolve, reject) {
-        mysql.queryAll("member_badges", ['guild = ' + guild, 'uuid = ' + userid]).then((res) => {
-            resolve(res);
-        });
+    return common.database['member_badges'].filter(function (e) {
+       return (e.guild === guild && e.uuid === userid)
     });
 }
 
 function getMemberBadge(guild, userid, identifier) {
-    return new Promise(function (resolve, reject) {
-        mysql.queryAll("member_badges", ['guild = ' + guild, 'uuid = ' + userid, 'identifier = "' + identifier + '"']).then((res) => {
-            resolve(res[0]);
-        });
-    });
+    return common.database['member_badges'].filter(function (e) {
+        return (e.guild === guild && e.uuid === userid && e.identifier === identifier)
+    }).get(0);
 }
 
 function getBadgeInfo(guild, identifier) {
-    return new Promise(function (resolve, reject) {
-        mysql.queryAll("badges", ['guild = ' + guild, 'identifier = "' + identifier + '"']).then((res) => {
-            resolve(res[0]);
-        });
-    });
+    return common.database['badges'].filter(function (e) {
+       return (e.guild === guild && e.identifier === identifier)
+    }).get(0);
 }
 
 function giveMemberBadge(guild, userid, identifier) {
-    return new Promise(function (resolve, reject) {
-        mysql.addRow("member_badges", ["guild", "uuid", "identifier"], [guild, userid, identifier]).then((res) => {
-            resolve(res);
-        });
-    }) ;
+    common.database['badges'].push({
+        guild,
+        uuid: userid,
+        identifier
+    })
+    mysql.addRow("member_badges", ["guild", "uuid", "identifier"], [guild, userid, identifier])
 }
 
 module.exports = {
