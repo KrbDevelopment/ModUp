@@ -31,6 +31,7 @@ const database = {
     "statistics": {},
     "users": {},
     "badges": {},
+    "guild_kicks": {},
 }
 
 module.exports = {
