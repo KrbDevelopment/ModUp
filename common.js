@@ -33,6 +33,7 @@ const database = {
     "badges": {},
     "guild_kicks": {},
     "guild_bans": {},
+    "guild_mutes": {}
 }
 
 module.exports = {
